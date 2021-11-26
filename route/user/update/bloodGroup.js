@@ -1,22 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcrypt");
 const mysql = require("mysql");
 const mysqlConnection = require("../../../config/database");
 
-router.post("/user/update/password", async (req, res) => {
-  const newpassword = req.body.password;
-  const uniqueUserId = req.body.uniqueUserId;
-  const hashedPassword = await bcrypt.hash(newpassword, 10);
+router.post("/user/update/bloodGroup", async (req, res) => {
+  const bloodGroup = req.body.bloodGroup;
+  const user = req.body.uniqueUserId;
 
   mysqlConnection.getConnection(async (err, connection) => {
     if (err) throw err;
     var mysql_query =
-      "update user_table set password = ? where unique_user_id = ?;";
-    const update_query = mysql.format(mysql_query, [
-      hashedPassword,
-      uniqueUserId,
-    ]);
+      "update user_table set user_blood_group = ? where unique_user_id = ?;";
+    const update_query = mysql.format(mysql_query, [bloodGroup, user]);
 
     connection.query(update_query, async (err, result) => {
       connection.release();

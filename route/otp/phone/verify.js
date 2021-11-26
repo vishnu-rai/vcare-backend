@@ -6,11 +6,11 @@ const client = require("twilio")(
 );
 
 router.get("/otp/phone/verify", (req, res) => {
-  if (req.query.phonenumber && req.query.code.length === 4) {
+  if (req.query.phoneNumber && req.query.code.length === 4) {
     client.verify
       .services(process.env.SERVICE_ID)
       .verificationChecks.create({
-        to: `+${req.query.phonenumber}`,
+        to: `+${req.query.phoneNumber}`,
         code: req.query.code,
       })
       .then((data) => {
@@ -24,7 +24,7 @@ router.get("/otp/phone/verify", (req, res) => {
   } else {
     res.status(400).send({
       message: "Wrong phone number or code :(",
-      phonenumber: req.query.phonenumber,
+      phonenumber: req.query.phoneNumber,
       data,
     });
   }

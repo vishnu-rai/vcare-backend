@@ -6,17 +6,17 @@ const client = require("twilio")(
 );
 
 router.get("/otp/phone/send", (req, res) => {
-  if (req.query.phonenumber) {
+  if (req.query.phoneNumber) {
     client.verify
       .services(process.env.SERVICE_ID)
       .verifications.create({
-        to: `+${req.query.phonenumber}`,
+        to: `+${req.query.phoneNumber}`,
         channel: "sms",
       })
       .then((data) => {
         res.status(200).send({
           message: "Verification is sent!!",
-          phonenumber: req.query.phonenumber,
+          phonenumber: req.query.phoneNumber,
           data,
         });
       });

@@ -5,7 +5,7 @@ const mysql = require("mysql");
 const bcrypt = require("bcrypt");
 
 router.post("/user/sign/in", (req, res) => {
-  const user = req.body.unique_user_id;
+  const user = req.body.uniqueUserId;
   const password = req.body.password;
   mysqlConnection.getConnection(async (err, connection) => {
     if (err) throw err;
