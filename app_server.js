@@ -3,6 +3,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const mysql = require("mysql");
 // const generateAccessToken = require("./generateAccessToken");
+var emailvalidator = require("email-validator");
 
 var app = express();
 app.use(express.json());
@@ -23,7 +24,7 @@ mysqlConnection.getConnection((err) => {
   else console.log("Failed \n " + JSON.stringify(err, undefined, 2));
 });
 
-app.get("/user", (req, res) => {
+app.get("/users", (req, res) => {
   var sql = "call get_data()";
   mysqlConnection.query(sql, (err, row, fields) => {
     if (!err) res.send(row);
@@ -31,35 +32,7 @@ app.get("/user", (req, res) => {
   });
 });
 
-app.post("/adduser", (req, res) => {
-  var data = req.body;
-  var msql =
-    "SET @unique_user_id = ?;SET @phone_number = ?;SET @user_name = ?;\
-      SET @user_adhar_number = ?;SET @user_email_id = ?;SET @user_date_of_birth = ?;\
-      SET @user_gender = ?;SET @password = ?;\
-      CALL add_user(@unique_user_id,@phone_number,@user_name,@user_adhar_number,\
-      @user_email_id,@user_date_of_birth,@user_gender,@password);";
-
-  mysqlConnection.query(
-    msql,
-    [
-      data.unique_user_id,
-      data.phone_number,
-      data.user_name,
-      data.user_adhar_number,
-      data.user_email_id,
-      data.user_date_of_birth,
-      data.user_gender,
-      data.password,
-    ],
-    (err, row, field) => {
-      if (!err) res.send(row);
-      else res.send("failed  " + err);
-    }
-  );
-});
-
-app.get("/send_otp", (req, res) => {
+app.get("/send_phone_otp", (req, res) => {
   if (req.query.phonenumber) {
     client.verify
       .services(process.env.SERVICE_ID)
@@ -83,7 +56,7 @@ app.get("/send_otp", (req, res) => {
   }
 });
 
-app.get("/verify_otp", (req, res) => {
+app.get("/verify_phone_otp", (req, res) => {
   if (req.query.phonenumber && req.query.code.length === 4) {
     client.verify
       .services(process.env.SERVICE_ID)
@@ -150,9 +123,9 @@ app.post("/createUser", async (req, res) => {
           res.sendStatus(201);
         });
       }
-    }); //end of connection.query()
-  }); //end of db.getConnection()
-}); //end of app.post()
+    });
+  });
+});
 
 app.post("/login", (req, res) => {
   const user = req.body.unique_user_id;
@@ -183,8 +156,75 @@ app.post("/login", (req, res) => {
         } else {
           console.log("---------> Password Incorrect");
           res.send("Password incorrect!");
-        } //end of bcrypt.compare()
-      } //end of User exists i.e. results.length==0
-    }); //end of connection.query()
-  }); //end of db.connection()
-}); //end of app.post()
+        }
+      }
+    });
+  });
+});
+
+app.post("/updatepassword", async (req, res) => {
+  const newpassword = req.body.password;
+  const user = req.body.unique_user_id;
+  const hashedPassword = await bcrypt.hash(newpassword, 10);
+
+  mysqlConnection.getConnection(async (err, connection) => {
+    if (err) throw err;
+    var mysql_query =
+      "update user_table set password = ? where unique_user_id = ?;";
+    const update_query = mysql.format(mysql_query, [hashedPassword, user]);
+
+    connection.query(update_query, async (err, result) => {
+      connection.release();
+      if (!err) res.json({ status: "Success" });
+      else res.json({ status: "Failed" });
+    });
+  });
+});
+
+app.get("/send_email_otp", (req, res) => {
+  if (!emailvalidator.validate(req.query.email)) {
+    console.log("Invalid email address.");
+    res.status(400).send({
+      message: "Invalid email address :!",
+      email: req.query.email,
+    });
+  } else {
+    client.verify
+      .services(process.env.EMAIL_SERVICE_ID)
+      .verifications.create({ to: req.query.email, channel: "email" })
+      .then((data) => {
+        console.log("Otp sent to email.");
+        res.status(200).send({
+          message: "Verification code is sent!!",
+          email: req.query.email,
+          data,
+        });
+      });
+  }
+});
+
+app.get("/verify_email_otp", (req, res) => {
+  if (req.query.email && req.query.code.length === 4) {
+    client.verify
+      .services(process.env.EMAIL_SERVICE_ID)
+      .verificationChecks.create({
+        to: req.query.email,
+        code: req.query.code,
+      })
+      .then((data) => {
+        if (data.status === "approved") {
+          res.status(200).send({
+            message: "User is Verified!!",
+            data,
+          });
+        }
+      });
+  } else {
+    res.status(400).send({
+      message: "Wrong email or code :(",
+      phonenumber: req.query.email,
+      data,
+    });
+  }
+});
+
