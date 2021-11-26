@@ -2,7 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const bcrypt = require("bcrypt");
 const mysql = require("mysql");
-// const generateAccessToken = require("./generateAccessToken");
 var emailvalidator = require("email-validator");
 
 var app = express();
