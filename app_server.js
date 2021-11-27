@@ -34,6 +34,10 @@ const calculateUserAge = require("./route/calculate/user/age");
 const calculateUserTotalCount = require("./route/calculate/user/totalCount");
 const calculateAppointmentTotalCount = require("./route/calculate/appointment/totalCount");
 
+const bookAppointment = require("./route/book/appointment");
+const updateAppointment = require("./route/update/appointment");
+const deleteAppointment = require("./route/delete/appointment");
+
 var app = express();
 app.use(express.json());
 
@@ -68,6 +72,10 @@ app.use(userUpdateCity);
 app.use(userUpdatePinCode);
 app.use(userUpdatePassword);
 app.use(userUpdateEmailId);
+
+app.use(bookAppointment);
+app.use(updateAppointment);
+app.use(deleteAppointment);
 
 const mysqlConnection = require("./config/database");
 

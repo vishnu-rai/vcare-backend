@@ -1,7 +1,7 @@
-create database project1;
+-- create database project1;
 use project1;
 
-create table user_table (
+/*create table user_table (
 	unique_user_id int unique primary key not null,
     user_verification_status boolean not null default false,
     phone_number bigint not null,
@@ -15,11 +15,11 @@ create table user_table (
     user_city varchar(20),
     user_location_pincode int, 
     password varchar(10) not null
-    );
+    );*/
 
 
 
-DELIMITER &&  
+/*DELIMITER &&  
 create procedure get_data()  
 begin    
        select * from user_table;
@@ -32,7 +32,6 @@ begin
 	insert into user_table values
 		(unique_user_id,false,phone_number,user_name,user_adhar_number,user_email_id,'Blood',user_date_of_birth,user_gender,'address','city',0,password);
 end &&
-DELIMITER ;
-
+DELIMITER ;*/
 
 select * from user_table;
