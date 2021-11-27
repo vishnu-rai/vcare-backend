@@ -14,8 +14,8 @@ const userUpdateCity = require("./route/user/update/city");
 const userUpdatePinCode = require("./route/user/update/pinCode");
 const userUpdateEmailId = require("./route/user/update/emailId");
 
-const signIn = require("./route/user/sign/in");
-const signUp = require("./route/user/sign/up");
+const userSignIn = require("./route/user/sign/in");
+const userSignUp = require("./route/user/sign/up");
 
 const listUserAll = require("./route/list/user/all");
 const listUserSamePhoneNumber = require("./route/list/user/samePhoneNumber");
@@ -42,9 +42,6 @@ app.use(otpEmailVerify);
 app.use(otpPhoneSend);
 app.use(otpPhoneVerify);
 
-app.use(signIn);
-app.use(signUp);
-
 app.use(listUserAll);
 app.use(listUserSamePhoneNumber);
 app.use(listAppointmentHospitalWise);
@@ -62,6 +59,8 @@ app.use(calculateUserAge);
 app.use(calculateUserTotalCount);
 app.use(calculateAppointmentTotalCount);
 
+app.use(userSignIn);
+app.use(userSignUp);
 app.use(userUpdateBloodGroup);
 app.use(userUpdatePhoneNumber);
 app.use(userUpdateAddress);
