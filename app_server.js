@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const mongoose = require('mongoose');
 
 const otpEmailSend = require("./route/otp/email/send");
 const otpEmailVerify = require("./route/otp/email/verify");
@@ -41,49 +42,65 @@ const deleteAppointment = require("./route/delete/appointment");
 var app = express();
 app.use(express.json());
 
-app.use(otpEmailSend);
-app.use(otpEmailVerify);
-app.use(otpPhoneSend);
-app.use(otpPhoneVerify);
 
-app.use(listUserAll);
-app.use(listUserSamePhoneNumber);
-app.use(listAppointmentHospitalWise);
-app.use(listAppointmentDoctorWise);
-app.use(listAppointmentUserWise);
-app.use(listAppointmentPhoneNumberWise);
-app.use(listAppointmentDateWise);
-app.use(listHospitalAppointmentDateWise);
-app.use(listHospitalAppointmentDoctorWise);
-app.use(listDoctorAppointmentAll);
-app.use(listDoctorAppointmentDateWise);
-app.use(listHospitalAppointmentDoctorDateWise);
+//database connection
+const PORT = 3000;
+const dbURI = "mongodb+srv://roshan:roshan123@appintment.yx3ru.mongodb.net/appointment-db";
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
+  .then((result)=> {
+    app.listen(PORT);
+    console.log(`DB is connected and app is listening in http://localhost:${PORT}`)
+  })
+  .catch((err) => console.log("Error: ", err));
 
-app.use(calculateUserAge);
-app.use(calculateUserTotalCount);
-app.use(calculateAppointmentTotalCount);
 
-app.use(userSignIn);
-app.use(userSignUp);
-app.use(userUpdateBloodGroup);
-app.use(userUpdatePhoneNumber);
-app.use(userUpdateAddress);
-app.use(userUpdateCity);
-app.use(userUpdatePinCode);
-app.use(userUpdatePassword);
-app.use(userUpdateEmailId);
+// app.use(otpEmailSend);
+// app.use(otpEmailVerify);
+// app.use(otpPhoneSend);
+// app.use(otpPhoneVerify);
 
-app.use(bookAppointment);
-app.use(updateAppointment);
-app.use(deleteAppointment);
+// app.use(listUserAll);
+// app.use(listUserSamePhoneNumber);
+// app.use(listAppointmentHospitalWise);
+// app.use(listAppointmentDoctorWise);
+// app.use(listAppointmentUserWise);
+// app.use(listAppointmentPhoneNumberWise);
+// app.use(listAppointmentDateWise);
+// app.use(listHospitalAppointmentDateWise);
+// app.use(listHospitalAppointmentDoctorWise);
+// app.use(listDoctorAppointmentAll);
+// app.use(listDoctorAppointmentDateWise);
+// app.use(listHospitalAppointmentDoctorDateWise);
 
-const mysqlConnection = require("./config/database");
+// app.use(calculateUserAge);
+// app.use(calculateUserTotalCount);
+// app.use(calculateAppointmentTotalCount);
 
-app.listen(process.env.APP_PORT, () =>
-  console.log("Express server is running at port : " + process.env.APP_PORT)
-);
+// app.use(userSignIn);
+// app.use(userSignUp);
+// app.use(userUpdateBloodGroup);
+// app.use(userUpdatePhoneNumber);
+// app.use(userUpdateAddress);
+// app.use(userUpdateCity);
+// app.use(userUpdatePinCode);
+// app.use(userUpdatePassword);
+// app.use(userUpdateEmailId);
 
-mysqlConnection.getConnection((err) => {
-  if (!err) console.log("Succeed");
-  else console.log("Failed \n " + JSON.stringify(err, undefined, 2));
-});
+// app.use(bookAppointment);
+// app.use(updateAppointment);
+// app.use(deleteAppointment);
+
+
+
+
+
+// const mysqlConnection = require("./config/database");
+
+// app.listen(process.env.APP_PORT, () =>
+//   console.log("Express server is running at port : " + process.env.APP_PORT)
+// );
+
+// mysqlConnection.getConnection((err) => {
+//   if (!err) console.log("Succeed");
+//   else console.log("Failed \n " + JSON.stringify(err, undefined, 2));
+// });
