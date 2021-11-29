@@ -20,7 +20,7 @@ router.post("/book/appointment", async (req, res) => {
       "insert into appointment_table values (appointment_id = ?,user_id = ?,verification_status = ?,\
       hospital_id = ?, doctor_id = ?, department = ?, appointment_date = ?,appointment_number = ?);";
 
-    const book_query = mysql.format(mysql_book_query, [
+    var book_query = mysql.format(mysql_book_query, [
       appointmentId,
       userId,
       verificationStatus,
