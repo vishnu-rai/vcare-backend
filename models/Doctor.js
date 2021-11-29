@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { isEmail } = require('validator');
 const bcrypt = require('bcrypt');
 
-const userSchema = new mongoose.Schema({
+const doctorSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, 'Please enter an email'],
@@ -49,10 +49,15 @@ const userSchema = new mongoose.Schema({
   },
   locationPinCode: {
       type: Number
+  },
+  hospital: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "hospital",
+    required: true
   }
 });
 
 
-const User = mongoose.model('user', userSchema);
+const Doctor = mongoose.model('doctor', doctorSchema);
 
-module.exports = User;
+module.exports = Doctor;

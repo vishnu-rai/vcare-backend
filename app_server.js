@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require('mongoose');
+const Hospital = require('./models/Hospital');
 
 const otpEmailSend = require("./route/otp/email/send");
 const otpEmailVerify = require("./route/otp/email/verify");
@@ -46,49 +47,65 @@ app.use(express.json());
 //database connection
 const PORT = 3000;
 const dbURI = "mongodb+srv://roshan:roshan123@appintment.yx3ru.mongodb.net/appointment-db";
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
+mongoose.connect(dbURI)
   .then((result)=> {
     app.listen(PORT);
-    console.log(`DB is connected and app is listening in http://localhost:${PORT}`)
+    console.log(`DB is connected and app is listening in http://localhost:${PORT}`);
+    console.log("New hospital is forming......")
+  try {
+
+    Hospital.create({name: "Apolo", address: "delhi, India", locationPinCode: 829122, numberOfDoctors: 100})
+    .then((result) => {
+      console.log("created!!!")
+    })
+    .catch((error) => {
+      console.log("Lag gye!", error);
+    })
+    
+    
+  }
+  catch(err) {
+    console.log("Something went wrong while creating hospital", err)
+  };
   })
   .catch((err) => console.log("Error: ", err));
 
 
-// app.use(otpEmailSend);
-// app.use(otpEmailVerify);
-// app.use(otpPhoneSend);
-// app.use(otpPhoneVerify);
+app.use(otpEmailSend);
+app.use(otpEmailVerify);
+app.use(otpPhoneSend);
+app.use(otpPhoneVerify);
 
-// app.use(listUserAll);
-// app.use(listUserSamePhoneNumber);
-// app.use(listAppointmentHospitalWise);
-// app.use(listAppointmentDoctorWise);
-// app.use(listAppointmentUserWise);
-// app.use(listAppointmentPhoneNumberWise);
-// app.use(listAppointmentDateWise);
-// app.use(listHospitalAppointmentDateWise);
-// app.use(listHospitalAppointmentDoctorWise);
-// app.use(listDoctorAppointmentAll);
-// app.use(listDoctorAppointmentDateWise);
-// app.use(listHospitalAppointmentDoctorDateWise);
+app.use(listUserAll);
+app.use(listUserSamePhoneNumber);
+app.use(listAppointmentHospitalWise);
+app.use(listAppointmentDoctorWise);
+app.use(listAppointmentUserWise);
+app.use(listAppointmentPhoneNumberWise);
+app.use(listAppointmentDateWise);
+app.use(listHospitalAppointmentDateWise);
+app.use(listHospitalAppointmentDoctorWise);
+app.use(listDoctorAppointmentAll);
+app.use(listDoctorAppointmentDateWise);
+app.use(listHospitalAppointmentDoctorDateWise);
 
-// app.use(calculateUserAge);
-// app.use(calculateUserTotalCount);
-// app.use(calculateAppointmentTotalCount);
+app.use(calculateUserAge);
+app.use(calculateUserTotalCount);
+app.use(calculateAppointmentTotalCount);
 
-// app.use(userSignIn);
-// app.use(userSignUp);
-// app.use(userUpdateBloodGroup);
-// app.use(userUpdatePhoneNumber);
-// app.use(userUpdateAddress);
-// app.use(userUpdateCity);
-// app.use(userUpdatePinCode);
-// app.use(userUpdatePassword);
-// app.use(userUpdateEmailId);
+app.use(userSignIn);
+app.use(userSignUp);
+app.use(userUpdateBloodGroup);
+app.use(userUpdatePhoneNumber);
+app.use(userUpdateAddress);
+app.use(userUpdateCity);
+app.use(userUpdatePinCode);
+app.use(userUpdatePassword);
+app.use(userUpdateEmailId);
 
-// app.use(bookAppointment);
-// app.use(updateAppointment);
-// app.use(deleteAppointment);
+app.use(bookAppointment);
+app.use(updateAppointment);
+app.use(deleteAppointment);
 
 
 
@@ -104,3 +121,16 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCr
 //   if (!err) console.log("Succeed");
 //   else console.log("Failed \n " + JSON.stringify(err, undefined, 2));
 // });
+
+// const formNewHospital = async () => {
+//   console.log("New hospital is forming......")
+//   try {
+
+//     var newHospital = await Hospital.create({name: "Apolo", address: "delhi, India", locationPinCode: 829122, numberOfDoctors: 100})
+//     console.log("New Hospital formed!");
+//   }
+//   catch(err) {
+//     console.log("Something went wrong while creating hospital", err)
+//   };
+// };
+// formNewHospital();
