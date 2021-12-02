@@ -2,8 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 
-const Hospital = require("./models/Hospital");
-
 const otpEmailSend = require("./route/otp/email/send");
 const otpEmailVerify = require("./route/otp/email/verify");
 const otpPhoneSend = require("./route/otp/phone/send");
@@ -16,12 +14,11 @@ const userUpdateAddress = require("./route/user/update/address");
 const userUpdateCity = require("./route/user/update/city");
 const userUpdatePinCode = require("./route/user/update/pinCode");
 const userUpdateEmailId = require("./route/user/update/emailId");
-
 const userSignIn = require("./route/user/sign/in");
 const userSignUp = require("./route/user/sign/up");
-
 const listUserAll = require("./route/list/user/all");
 const listUserSamePhoneNumber = require("./route/list/user/samePhoneNumber");
+
 const listAppointmentHospitalWise = require("./route/list/appointment/hospitalWise");
 const listAppointmentDoctorWise = require("./route/list/appointment/doctorWise");
 const listAppointmentUserWise = require("./route/list/appointment/userWise");
@@ -96,26 +93,4 @@ app.use(bookAppointment);
 app.use(updateAppointment);
 app.use(deleteAppointment);
 
-
-// app.listen(process.env.APP_PORT, () =>
-//   console.log("Express server is running at port : " + process.env.APP_PORT)
-// );
-
-// mysqlConnection.getConnection((err) => {
-//   if (!err) console.log("Succeed");
-//   else console.log("Failed \n " + JSON.stringify(err, undefined, 2));
-// });
-
-// const formNewHospital = async () => {
-//   console.log("New hospital is forming......")
-//   try {
-
-//     var newHospital = await Hospital.create({name: "Apolo", address: "delhi, India", locationPinCode: 829122, numberOfDoctors: 100})
-//     console.log("New Hospital formed!");
-//   }
-//   catch(err) {
-//     console.log("Something went wrong while creating hospital", err)
-//   };
-// };
-// formNewHospital();
 module.exports = mongoosedb;

@@ -27,7 +27,7 @@ module.exports = {
   userListSamePhoneNumber: async (req, res) => {
     try {
       var query = { phoneNumber: req.body.phoneNumber };
-      User.find(query , (err, users) => {
+      User.find(query, (err, users) => {
         if (err) res.json({ status: "Failed", error: err });
         else res.json({ status: "OK", Users: users });
       });
@@ -42,7 +42,10 @@ module.exports = {
       var newValue = { $set: { address: req.body.address } };
       User.updateOne(query, newValue, (err, users) => {
         if (err) res.json({ status: "Failed", error: err });
-        else res.json({ status: "OK", Users: users });
+        else {
+          if (users.matchedCount == 0) res.json({ status: "Invalid user" });
+          else res.json({ status: "OK", Users: users });
+        }
       });
     } catch (error) {
       res.json({ status: "Failed", error: error });
@@ -55,7 +58,10 @@ module.exports = {
       var newValue = { $set: { city: req.body.address } };
       User.updateOne(query, newValue, (err, users) => {
         if (err) res.json({ status: "Failed", error: err });
-        else res.json({ status: "OK", Users: users });
+        else {
+          if (users.matchedCount == 0) res.json({ status: "Invalid user" });
+          else res.json({ status: "OK", Users: users });
+        }
       });
     } catch (error) {
       res.json({ status: "Failed", error: error });
@@ -68,7 +74,10 @@ module.exports = {
       var newValue = { $set: { locationPinCode: req.body.address } };
       User.updateOne(query, newValue, (err, users) => {
         if (err) res.json({ status: "Failed", error: err });
-        else res.json({ status: "OK", Users: users });
+        else {
+          if (users.matchedCount == 0) res.json({ status: "Invalid user" });
+          else res.json({ status: "OK", Users: users });
+        }
       });
     } catch (error) {
       res.json({ status: "Failed", error: error });
@@ -81,7 +90,10 @@ module.exports = {
       var newValue = { $set: { bloodGroup: req.body.bloodGroup } };
       User.updateOne(query, newValue, (err, users) => {
         if (err) res.json({ status: "Failed", error: err });
-        else res.json({ status: "OK", Users: users });
+        else {
+          if (users.matchedCount == 0) res.json({ status: "Invalid user" });
+          else res.json({ status: "OK", Users: users });
+        }
       });
     } catch (error) {
       res.json({ status: "Failed", error: error });
@@ -94,7 +106,10 @@ module.exports = {
       var newValue = { $set: { email: req.body.emailId } };
       User.updateOne(query, newValue, (err, users) => {
         if (err) res.json({ status: "Failed", error: err });
-        else res.json({ status: "OK", Users: users });
+        else {
+          if (users.matchedCount == 0) res.json({ status: "Invalid user" });
+          else res.json({ status: "OK", Users: users });
+        }
       });
     } catch (error) {
       res.json({ status: "Failed", error: error });
@@ -107,7 +122,10 @@ module.exports = {
       var newValue = { $set: { password: req.body.password } };
       User.updateOne(query, newValue, (err, users) => {
         if (err) res.json({ status: "Failed", error: err });
-        else res.json({ status: "OK", Users: users });
+        else {
+          if (users.matchedCount == 0) res.json({ status: "Invalid user" });
+          else res.json({ status: "OK", Users: users });
+        }
       });
     } catch (error) {
       res.json({ status: "Failed", error: error });
@@ -120,7 +138,10 @@ module.exports = {
       var newValue = { $set: { phoneNumber: req.body.phoneNumber } };
       User.updateOne(query, newValue, (err, users) => {
         if (err) res.json({ status: "Failed", error: err });
-        else res.json({ status: "OK", Users: users });
+        else {
+          if (users.matchedCount == 0) res.json({ status: "Invalid user" });
+          else res.json({ status: "OK", Users: users });
+        }
       });
     } catch (error) {
       res.json({ status: "Failed", error: error });

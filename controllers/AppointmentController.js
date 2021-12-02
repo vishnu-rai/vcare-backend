@@ -1,20 +1,53 @@
 const Appointment = require("../models/Appointment");
 
-
-module.exports.bookAppointment = async (req, res) => {
-    const userId = req.body.userId;
-    const appointmentId = req.body.appointmentId;
-    const hospitalId = req.body.hospitalId;
-    const doctorId = req.body.doctorId;
-    const department = req.body.department;
-    const appointmentDate = req.body.appointmentDate;
-    const appointmentNumber = req.body.appointmentNumber;
-    const verificationStatus = 0;
+module.exports = {
+  bookAppointment: async (req, res) => {
     try {
-        // userId, hospitalId, doctorId these are foreign key so we can't add them directly
-        //const appointmentObj = await Appointment.create({}); 
+      const newAppointment = new Appointment(req.body);
+      const result = await newAppointment.save();
+      res.json({ status: "OK", result: result });
+    } catch (error) {
+      res.json({ status: "Failed", error: error });
     }
-    catch {
-        
+  },
+
+  updateAppointment: async (req, res) => {
+    try {
+      const appointmentId = req.body.appointmentId;
+      const hospitalId = req.body.hospitalId;
+      var newStatus = {
+        $set: { verificationStatus: req.body.verificationStatus },
+      };
+      var query = { appointmentId: appointmentId, hospitalId: hospitalId };
+      Appointment.updateOne(query, newStatus, (err, result) => {
+        if (err) res.json({ status: "Failed", error: err });
+        else {
+          if (result.matchedCount == 0) res.json({ status: "Invalid request" });
+          else res.json({ status: "OK", update: result });
+        }
+      });
+    } catch (error) {
+      res.json({ status: "Failed", error: error });
     }
+  },
+
+  deleteAppointment: async (req, res) => {
+    try {
+      const appointmentId = req.body.appointmentId;
+      const hospitalId = req.body.hospitalId;
+      var newStatus = {
+        $set: { verificationStatus: req.body.verificationStatus },
+      };
+      var query = { appointmentId: appointmentId, hospitalId: hospitalId };
+      Appointment.updateOne(query, newStatus, (err, result) => {
+        if (err) res.json({ status: "Failed", error: err });
+        else {
+          if (result.matchedCount == 0) res.json({ status: "Invalid request" });
+          else res.json({ status: "OK", update: result });
+        }
+      });
+    } catch (error) {
+      res.json({ status: "Failed", error: error });
+    }
+  },
 };

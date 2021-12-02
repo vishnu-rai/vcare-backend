@@ -1,36 +1,42 @@
 const mongoose = require("mongoose");
 
 const appointmentSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
+  appointmentId: {
+    type: Number,
+    required: true,
+  },
+  userId: {
+    type: Number,
     ref: "user",
-    required: true, 
+    required: true,
   },
   verificationStatus: {
-    type: Boolean,
+    type: Number,
+    default: 0,
   },
-  hospital: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "hospital",
-      required: true
+  hospitalId: {
+    type: Number,
+    ref: "hospital",
+    required: true,
   },
-  doctor: {
-      type: Boolean,
-      ref: "doctor",
-      required: true
+  doctorId: {
+    type: Number,
+    ref: "doctor",
+    required: true,
   },
   department: {
-      type: String
+    type: String,
+    required: true,
   },
   appointmentDate: {
-      type: String
+    type: String,
+    required: true,
+    default: new Date(),
   },
   appointmentNumber: {
-      type: Number
-  }
-
+    type: Number,
+  },
 });
-
 
 const Appointment = mongoose.model("appointment", appointmentSchema);
 
