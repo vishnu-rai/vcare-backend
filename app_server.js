@@ -50,7 +50,7 @@ const dbURI =
   "mongodb://roshan:roshan123@appintment-shard-00-00.yx3ru.mongodb.net:27017,appintment-shard-00-01.yx3ru.mongodb.net:27017,appintment-shard-00-02.yx3ru.mongodb.net:27017/appointment-db?ssl=true&replicaSet=atlas-pwufm6-shard-0&authSource=admin&retryWrites=true&w=majority";
 // const d =
 //   "mongodb+srv://roshan:roshan123@appintment.yx3ru.mongodb.net/appointment-db";
-mongoose
+const mongoosedb = mongoose
   .connect(dbURI)
   .then((result) => {
     app.listen(PORT);
@@ -118,3 +118,4 @@ app.use(deleteAppointment);
 //   };
 // };
 // formNewHospital();
+module.exports = mongoosedb;

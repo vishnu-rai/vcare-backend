@@ -1,9 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const ListAllUser = require("../../../controllers/UserControllers");
+const UserControllers = require("../../../controllers/UserControllers");
 
-router.get("/list/user/all", (req, res) => {
-  
-});
+router.get("/list/user/all", UserControllers.userListAll);
 
 module.exports = router;
