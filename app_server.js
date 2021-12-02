@@ -19,16 +19,18 @@ const userSignUp = require("./route/user/sign/up");
 const listUserAll = require("./route/list/user/all");
 const listUserSamePhoneNumber = require("./route/list/user/samePhoneNumber");
 
-const listAppointmentHospitalWise = require("./route/list/appointment/hospitalWise");
-const listAppointmentDoctorWise = require("./route/list/appointment/doctorWise");
-const listAppointmentUserWise = require("./route/list/appointment/userWise");
-const listAppointmentPhoneNumberWise = require("./route/list/appointment/phoneNumberWise");
 const listAppointmentDateWise = require("./route/list/appointment/dateWise");
-const listHospitalAppointmentDateWise = require("./route/list/hospital/appointment/dateWise");
-const listHospitalAppointmentDoctorWise = require("./route/list/hospital/appointment/doctorWise");
-const listDoctorAppointmentAll = require("./route/list/doctor/appointment/all");
-const listDoctorAppointmentDateWise = require("./route/list/doctor/appointment/dateWise");
-const listHospitalAppointmentDoctorDateWise = require("./route/list/hospital/appointment/doctorDateWise");
+const listAppointmentDoctorDateWise = require("./route/list/appointment/doctorDateWise");
+const listAppointmentDoctorWise = require("./route/list/appointment/doctorWise");
+const listAppointmentHospitalDateWise = require("./route/list/appointment/hospitalDateWise");
+const listAppointmentHospitalDoctorDateWise = require("./route/list/appointment/hospitalDoctorDateWise");
+const listAppointmentHospitalDoctorWise = require("./route/list/appointment/hospitalDoctorWise");
+const listAppointmentHospitalWise = require("./route/list/appointment/hospitalWise");
+const listAppointmentPhoneNumberWise = require("./route/list/appointment/phoneNumberWise");
+const listAppointmentUserWise = require("./route/list/appointment/userWise");
+const listAppointmentAll = require("./route/list/appointment/all");
+const listAppointmentUserDateWise = require("./route/list/appointment/userDateWise");
+const listAppointmentPhoneNumberDateWise = require("./route/list/appointment/phoneNumberDateWise");
 
 const calculateUserAge = require("./route/calculate/user/age");
 const calculateUserTotalCount = require("./route/calculate/user/totalCount");
@@ -64,16 +66,19 @@ app.use(otpPhoneVerify);
 
 app.use(listUserAll);
 app.use(listUserSamePhoneNumber);
-app.use(listAppointmentHospitalWise);
-app.use(listAppointmentDoctorWise);
-app.use(listAppointmentUserWise);
-app.use(listAppointmentPhoneNumberWise);
+
 app.use(listAppointmentDateWise);
-app.use(listHospitalAppointmentDateWise);
-app.use(listHospitalAppointmentDoctorWise);
-app.use(listDoctorAppointmentAll);
-app.use(listDoctorAppointmentDateWise);
-app.use(listHospitalAppointmentDoctorDateWise);
+app.use(listAppointmentDoctorDateWise);
+app.use(listAppointmentDoctorWise);
+app.use(listAppointmentHospitalDateWise);
+app.use(listAppointmentHospitalDoctorDateWise);
+app.use(listAppointmentHospitalDoctorWise);
+app.use(listAppointmentHospitalWise);
+app.use(listAppointmentPhoneNumberWise);
+app.use(listAppointmentUserWise);
+app.use(listAppointmentAll);
+app.use(listAppointmentUserDateWise);
+app.use(listAppointmentPhoneNumberDateWise);
 
 app.use(calculateUserAge);
 app.use(calculateUserTotalCount);

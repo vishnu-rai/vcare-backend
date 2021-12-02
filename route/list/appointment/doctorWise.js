@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+ 
 
 // router.post("/list/appointment/doctorWise", (req, res) => {
 //   mysqlConnection.getConnection(async (err, connection) => {
